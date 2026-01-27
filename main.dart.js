@@ -29335,7 +29335,7 @@ return A.b([o*m+l*k+j*n,o*r+l*q+j*s,o*p[0]+l*p[1]+j*p[2]],t.n)},
 b0D(){var s=window.location.href
 s.toString
 if(B.c.n(s,"localhost")||B.c.n(s,"127.0.0.1"))return"http://127.0.0.1:8888/callback.html"
-return"https://fourfan.github.io/Guess-The-Song/callback.html"},
+return"https://fourfan.github.io/Party-Game/callback.html"},
 b0C(a){var s,r=$.a3T(),q=J.adb(a,t.N)
 for(s=0;s<a;++s)q[s]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"[r.lm(62)]
 return B.b.ps(q)},

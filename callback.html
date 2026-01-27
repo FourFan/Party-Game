@@ -51,10 +51,10 @@
 
         // 根據環境判斷路徑
         const isLocal = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost';
-        const basePath = isLocal ? '/' : '/Guess-The-Song/';
+        const basePath = isLocal ? '/' : '/Party-Game/';
         const redirectUri = isLocal
             ? 'http://127.0.0.1:8888/callback.html'
-            : 'https://fourfan.github.io/Guess-The-Song/callback.html';
+            : 'https://fourfan.github.io/Party-Game/callback.html';
 
         async function handleCallback() {
             console.log('DEBUG callback: Starting handleCallback');
