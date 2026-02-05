@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="/Party-Game/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Guess The Song - Spotify Playlist Game">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="guess_the_song">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>Party Game</title>
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+    }
+    .loading {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    .logo {
+      font-size: 48px;
+      margin-bottom: 30px;
+    }
+    .app-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      color: #9c27b0;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #333;
+      border-top: 3px solid #9c27b0;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 16px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .loading-text {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .error-text {
+      display: none;
+      color: #f44336;
+      font-size: 12px;
+      margin-top: 10px;
+      text-align: center;
+      max-width: 300px;
+    }
+    .hint-text {
+      display: none;
+      color: #999;
+      font-size: 12px;
+      margin-top: 10px;
+      text-align: center;
+      max-width: 350px;
+      line-height: 1.5;
+    }
+    .hint-text.visible {
+      display: block;
+    }
+    .timeout-message {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      color: #f44336;
+      text-align: center;
+      max-width: 350px;
+      line-height: 1.6;
+    }
+    .timeout-message.visible {
+      display: flex;
+    }
+    .timeout-message h3 {
+      margin: 0 0 12px 0;
+      font-size: 18px;
+    }
+    .timeout-message p {
+      margin: 0 0 16px 0;
+      font-size: 14px;
+      color: #999;
+    }
+    .reload-btn {
+      background-color: #9c27b0;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 24px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .reload-btn:hover {
+      background-color: #7b1fa2;
+    }
+  </style>
+</head>
+<body>
+  <div id="loading" class="loading">
+    <div class="logo">🎮</div>
+    <div class="app-name">Party Game</div>
+    <div class="spinner" id="spinner"></div>
+    <div class="loading-text" id="loading-text">Loading game...</div>
+    <div class="hint-text" id="hint-text">Loading is taking longer than expected.<br>Try using a regular browser window instead of incognito mode.</div>
+    <div class="timeout-message" id="timeout-message">
+      <h3>載入逾時</h3>
+      <p>無法載入遊戲，請重新整理頁面再試一次。<br>如果問題持續，請嘗試清除瀏覽器快取。</p>
+      <button class="reload-btn" onclick="location.reload()">重新整理</button>
+    </div>
+    <div class="error-text" id="error-text"></div>
+  </div>
+
+  <script>
+    // 必須在 Spotify SDK 載入前定義這個 callback
+    window.onSpotifyWebPlaybackSDKReady = function() {
+      console.log('Spotify Web Playback SDK is ready');
+      // Flutter 會在需要時初始化 player
+    };
+  </script>
+
+  <!-- Spotify Web Playback SDK - 非同步載入，不阻塞頁面 -->
+  <script src="https://sdk.scdn.co/spotify-player.js" async defer onerror="handleSdkError()"></script>
+
+  <script src="flutter_bootstrap.js" async></script>
+
+  <script>
+    var loadingStartTime = Date.now();
+    var loadingHidden = false;
+
+    function hideLoading() {
+      if (loadingHidden) return;
+      loadingHidden = true;
+      var loading = document.getElementById('loading');
+      if (loading) {
+        loading.style.display = 'none';
+      }
+    }
+
+    function handleSdkError() {
+      console.warn('Spotify SDK failed to load, but app will continue');
+    }
+
+    // 檢查是否從 callback 重導向回來（有 token 但 Flutter 可能斷線）
+    // 如果 Flutter 沒有在 5 秒內載入，強制刷新頁面
+    var isFromCallback = sessionStorage.getItem('spotify_access_token') && !sessionStorage.getItem('flutter_loaded');
+    if (isFromCallback) {
+      setTimeout(function() {
+        if (!loadingHidden) {
+          console.log('Flutter not loaded after callback, forcing reload...');
+          sessionStorage.setItem('flutter_loaded', 'pending');
+          window.location.reload();
+        }
+      }, 5000);
+    }
+    // Flutter 載入完成
+    window.addEventListener('flutter-first-frame', function() {
+      sessionStorage.setItem('flutter_loaded', 'true');
+      hideLoading();
+    });
+
+    // 備用：檢查 Flutter app 是否已載入
+    var checkFlutterInterval = setInterval(function() {
+      // 檢查多種 Flutter 元素
+      var flutterView = document.querySelector('flt-glass-pane')
+        || document.querySelector('flutter-view')
+        || document.querySelector('flt-scene-host')
+        || document.querySelector('canvas');
+      if (flutterView) {
+        hideLoading();
+        clearInterval(checkFlutterInterval);
+      }
+    }, 200);
+
+    // 10 秒後顯示提示
+    setTimeout(function() {
+      var hintText = document.getElementById('hint-text');
+      var loadingText = document.getElementById('loading-text');
+      if (!loadingHidden) {
+        if (hintText) hintText.classList.add('visible');
+        if (loadingText) loadingText.textContent = 'Still loading...';
+      }
+    }, 10000);
+
+    // 30 秒後顯示 timeout 訊息（而非直接隱藏）
+    setTimeout(function() {
+      if (!loadingHidden) {
+        console.warn('Loading timeout after 30s');
+        // 隱藏 spinner 和載入文字
+        var spinner = document.getElementById('spinner');
+        var loadingText = document.getElementById('loading-text');
+        var hintText = document.getElementById('hint-text');
+        var timeoutMessage = document.getElementById('timeout-message');
+        if (spinner) spinner.style.display = 'none';
+        if (loadingText) loadingText.style.display = 'none';
+        if (hintText) hintText.style.display = 'none';
+        // 顯示 timeout 訊息
+        if (timeoutMessage) timeoutMessage.classList.add('visible');
+      }
+    }, 30000);
+
+    // 每秒更新載入時間
+    setInterval(function() {
+      if (loadingHidden) return;
+      var elapsed = Math.floor((Date.now() - loadingStartTime) / 1000);
+      var loadingText = document.getElementById('loading-text');
+      if (loadingText && elapsed > 3) {
+        loadingText.textContent = 'Loading... (' + elapsed + 's)';
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
