@@ -29777,12 +29777,12 @@ o.toString
 s=A.hn(o)
 r=s.gt0().h(0,"guessthesong")
 q=s.gt0().h(0,"quizzy")
-if(r!=null&&r.length!==0){window.sessionStorage.setItem("qr_join_code",r)
+if(r!=null&&r.length!==0){window.localStorage.setItem("qr_join_code",r)
 o=window.history
 o.toString
 n=J.b_P(s)
 o.replaceState(new A.a74([],[]).od(null),"",n)
-return"/join"}if(q!=null&&q.length!==0){window.sessionStorage.setItem("qr_quiz_pin",q)
+return"/join"}if(q!=null&&q.length!==0){window.localStorage.setItem("qr_quiz_pin",q)
 o=window.history
 o.toString
 n=J.b_P(s)
@@ -29790,8 +29790,8 @@ o.replaceState(new A.a74([],[]).od(null),"",n)
 return"/quiz"}}catch(m){p=A.Z(m)
 A.a6("[Main] URL \u53c3\u6578\u89e3\u6790\u932f\u8aa4\uff1a"+A.m(p))}return null},
 blu(){var s,r
-try{if(window.sessionStorage.getItem("online_game_session")!=null){A.a6("[Main] \u767c\u73fe\u672a\u5b8c\u6210\u7684\u731c\u6b4c\u9023\u7dda\uff0c\u5c0e\u5411\u5927\u5ef3\u91cd\u9023")
-return"/reconnect"}if(window.sessionStorage.getItem("quizzy_game_session")!=null){A.a6("[Main] \u767c\u73fe\u672a\u5b8c\u6210\u7684 Quizzy \u9023\u7dda\uff0c\u5c0e\u5411\u91cd\u9023")
+try{if(window.localStorage.getItem("online_game_session")!=null){A.a6("[Main] \u767c\u73fe\u672a\u5b8c\u6210\u7684\u731c\u6b4c\u9023\u7dda\uff0c\u5c0e\u5411\u5927\u5ef3\u91cd\u9023")
+return"/reconnect"}if(window.localStorage.getItem("quizzy_game_session")!=null){A.a6("[Main] \u767c\u73fe\u672a\u5b8c\u6210\u7684 Quizzy \u9023\u7dda\uff0c\u5c0e\u5411\u91cd\u9023")
 return"/quiz_reconnect"}}catch(r){s=A.Z(r)
 A.a6("[Main] \u6aa2\u67e5 session \u932f\u8aa4\uff1a"+A.m(s))}return null},
 Vr:function Vr(a,b){this.c=a
@@ -104734,11 +104734,11 @@ $.ac.p3$.push(new A.aLq(this))},
 L(a){return B.oe}}
 A.aLq.prototype={
 $1(a){var s,r,q,p,o,n,m="qr_join_code"
-try{s=window.sessionStorage.getItem(m)
+try{s=window.localStorage.getItem(m)
 q=s!=null&&s.length!==0
 p=this.a
 o=t.z
-if(q){q=window.sessionStorage
+if(q){q=window.localStorage
 q.toString
 B.dQ.F(q,m)
 p=p.c
@@ -104768,11 +104768,11 @@ $.ac.p3$.push(new A.aN4(this))},
 L(a){return B.oe}}
 A.aN4.prototype={
 $1(a){var s,r,q,p,o,n,m="qr_quiz_pin"
-try{s=window.sessionStorage.getItem(m)
+try{s=window.localStorage.getItem(m)
 q=s!=null&&s.length!==0
 p=this.a
 o=t.z
-if(q){q=window.sessionStorage
+if(q){q=window.localStorage
 q.toString
 B.dQ.F(q,m)
 p=p.c
@@ -105382,14 +105382,14 @@ h=e.CW
 g=A.a1(h).i("a7<1,ag<h,@>>")
 h=A.aa(new A.a7(h,new A.aqH(),g),g.i("aG.E"))
 s=A.a4(["roomId",d,"roomCode",q,"playerId",p,"playerName",o,"isHost",n,"mode",m.b,"enableBonusSongName",l,"enableBonusArtist",k,"enableBonusYear",j,"savedAt",i,"songList",h,"localGuess",e.dy],t.N,t.X)
-d=window.sessionStorage
+d=window.localStorage
 d.toString
 d.setItem("online_game_session",B.aW.v8(s,null))
 A.a6("[OnlineGame] Session saved: "+A.m(e.f)+" ("+e.CW.length+" songs)")}catch(f){r=A.Z(f)
 A.a6("[OnlineGame] Failed to save session: "+A.m(r))}},
 YQ(){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b=this,a="online_game_session",a0="songList"
 if(b.e==null||b.r==null||b.f==null)return
-try{s=window.sessionStorage.getItem(a)
+try{s=window.localStorage.getItem(a)
 if(s==null)return
 j=t.a
 r=j.a(B.aW.jC(0,s,null))
@@ -105409,22 +105409,22 @@ h=A.n(j).i("bx<2>")
 j=A.aa(new A.bx(j,h),h.i("v.E"))
 J.dE(r,a0,j)
 J.dE(r,"savedAt",Date.now())
-j=window.sessionStorage
+j=window.localStorage
 j.toString
 j.setItem(a,B.aW.v8(r,null))
 A.a6("[OnlineGame] Song list saved: "+p.a+" confirmed songs")}catch(c){k=A.Z(c)
 A.a6("[OnlineGame] Failed to save song list: "+A.m(k))}},
 jY(){var s,r,q
-try{r=window.sessionStorage
+try{r=window.localStorage
 r.toString
 B.dQ.F(r,"online_game_session")
 A.a6("[OnlineGame] Session cleared")}catch(q){s=A.Z(q)
 A.a6("[OnlineGame] Failed to clear session: "+A.m(s))}},
 gP7(){var s,r
-try{s=window.sessionStorage.getItem("online_game_session")
+try{s=window.localStorage.getItem("online_game_session")
 return s!=null}catch(r){return!1}},
 ga9b(){var s,r,q,p
-try{s=window.sessionStorage.getItem("online_game_session")
+try{s=window.localStorage.getItem("online_game_session")
 if(s==null)return null
 r=t.a.a(B.aW.jC(0,s,null))
 q=A.ai(J.a9(r,"roomCode"))
@@ -105432,7 +105432,7 @@ return q}catch(p){return null}},
 yE(){var s=0,r=A.t(t.y),q,p=2,o=[],n=this,m,l,k,j,i,h,g,f,e,d
 var $async$yE=A.o(function(a,b){if(a===1){o.push(b)
 s=p}for(;;)switch(s){case 0:p=4
-m=window.sessionStorage.getItem("online_game_session")
+m=window.localStorage.getItem("online_game_session")
 if(m==null){q=!1
 s=1
 break}l=t.a.a(B.aW.jC(0,m,null))
@@ -105478,7 +105478,7 @@ return A.r($async$yE,r)},
 jj(){var s=0,r=A.t(t.y),q,p=2,o=[],n=this,m,l,k,j,i,h,g,f,e,d,c,b,a,a0,a1,a2,a3,a4,a5,a6,a7,a8,a9,b0,b1,b2,b3,b4,b5
 var $async$jj=A.o(function(b6,b7){if(b6===1){o.push(b7)
 s=p}for(;;)switch(s){case 0:p=4
-m=window.sessionStorage.getItem("online_game_session")
+m=window.localStorage.getItem("online_game_session")
 if(m==null){q=!1
 s=1
 break}l=t.a.a(B.aW.jC(0,m,null))
@@ -105583,7 +105583,7 @@ A.a6("[OnlineGame] hasSavedSession: "+o.gP7())
 s=o.gP7()?2:4
 break
 case 2:q=6
-n=window.sessionStorage.getItem("online_game_session")
+n=window.localStorage.getItem("online_game_session")
 s=n!=null?9:11
 break
 case 9:m=t.a.a(B.aW.jC(0,n,null))
@@ -106338,7 +106338,7 @@ if(a==null){A.a6("[OnlineGame] \u623f\u9593\u5df2\u88ab\u522a\u9664\uff08\u4e3b\
 r=this.a
 r.b=!1
 r.y=null
-try{q=window.sessionStorage
+try{q=window.localStorage
 q.toString
 B.dQ.F(q,"online_game_session")
 A.a6("[OnlineGame] Cleared session storage for deleted room")}catch(p){s=A.Z(p)
@@ -106434,7 +106434,7 @@ A.hF.prototype={}
 A.i6.prototype={}
 A.vy.prototype={
 avw(){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b="party_game_session",a="songList"
-try{s=window.sessionStorage.getItem(b)
+try{s=window.localStorage.getItem(b)
 j=t.N
 i=t.z
 r=A.x(j,i)
@@ -106457,13 +106457,13 @@ i=A.aa(new A.bx(i,g),g.i("v.E"))
 J.dE(j,a,i)
 J.dE(r,"currentRound",this.e)
 J.dE(r,"savedAt",Date.now())
-j=window.sessionStorage
+j=window.localStorage
 j.toString
 j.setItem(b,B.aW.v8(r,null))
 A.a6("[PartyGame] Song list saved: "+p.a+" confirmed songs")}catch(c){k=A.Z(c)
 A.a6("[PartyGame] Failed to save song list: "+A.m(k))}},
 avd(){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a
-try{s=window.sessionStorage.getItem("party_game_session")
+try{s=window.localStorage.getItem("party_game_session")
 if(s==null)return
 i=t.a
 r=i.a(B.aW.jC(0,s,null))
@@ -106493,7 +106493,7 @@ if(!J.h7(m,k.a)){this.f.push(k.b);++l}}if(l>0){B.b.cI(this.f,new A.arW())
 A.a6("[PartyGame] Restored "+A.m(l)+" deleted songs")}}catch(a){j=A.Z(a)
 A.a6("[PartyGame] Failed to restore deleted songs: "+A.m(j))}},
 atq(){var s,r,q
-try{r=window.sessionStorage
+try{r=window.localStorage
 r.toString
 B.dQ.F(r,"party_game_session")
 A.a6("[PartyGame] Session cleared")}catch(q){s=A.Z(q)
@@ -107133,20 +107133,20 @@ return A.r($async$pH,r)},
 ZX(){var s,r,q,p=this,o=p.c
 if(o==null||p.d==null)return
 try{s=A.a4(["gamePin",o,"playerId",p.d,"nickname",p.e,"isHost",p.f,"savedAt",Date.now()],t.N,t.X)
-o=window.sessionStorage
+o=window.localStorage
 o.toString
 o.setItem("quizzy_game_session",B.aW.v8(s,null))
 A.a6("[Quizzy] Session saved: pin="+A.m(p.c))}catch(q){r=A.Z(q)
 A.a6("[Quizzy] Failed to save session: "+A.m(r))}},
 tS(){var s,r,q
-try{r=window.sessionStorage
+try{r=window.localStorage
 r.toString
 B.dQ.F(r,"quizzy_game_session")}catch(q){s=A.Z(q)
 A.a6("[Quizzy] Failed to clear session: "+A.m(s))}},
 jj(){var s=0,r=A.t(t.y),q,p=2,o=[],n=this,m,l,k,j,i,h,g,f,e,d,c,b,a,a0,a1,a2,a3
 var $async$jj=A.o(function(a4,a5){if(a4===1){o.push(a5)
 s=p}for(;;)switch(s){case 0:p=4
-m=window.sessionStorage.getItem("quizzy_game_session")
+m=window.localStorage.getItem("quizzy_game_session")
 if(m==null){q=!1
 s=1
 break}l=t.a.a(B.aW.jC(0,m,null))
@@ -122267,7 +122267,7 @@ B.a61=new A.i5(B.av,B.l,B.j,B.i,null,B.aO,null,0,B.Yh,null)
 B.a54=new A.vN("kick",B.a61,null,t.wI)
 B.a55=new A.Ah(null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.ad1=new A.w(!0,B.ak,null,null,null,null,10,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.afP=new A.a3("v1.8.7 (2026-02-11)",null,B.ad1,null,null,null,null,null,null,null)
+B.afP=new A.a3("v1.8.8 (2026-02-11)",null,B.ad1,null,null,null,null,null,null,null)
 B.a56=new A.rg(null,null,16,16,null,null,B.afP,null)
 B.a5b=new A.Ao(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.DB=new A.vU(null)
