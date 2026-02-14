@@ -119,6 +119,7 @@
 
                 const data = await response.json();
                 const accessToken = data.access_token;
+                const refreshToken = data.refresh_token;
                 console.log('DEBUG callback: Token exchange successful');
 
                 // Clear the code verifier
@@ -127,6 +128,9 @@
                 // Save token to localStorage (使用 localStorage 以便主視窗可以讀取)
                 localStorage.setItem('spotify_access_token', accessToken);
                 localStorage.setItem('spotify_token_timestamp', Date.now().toString());
+                if (refreshToken) {
+                    localStorage.setItem('spotify_refresh_token', refreshToken);
+                }
                 console.log('DEBUG callback: Token saved to localStorage');
 
                 // 如果是 popup 視窗，通知父視窗並關閉
