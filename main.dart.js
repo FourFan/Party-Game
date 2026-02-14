@@ -105057,8 +105057,8 @@ case 2:return A.p(o.at(-1),r)}})
 return A.r($async$vQ,r)},
 a00(a){var s,r,q=this.e
 if(q!=null)q.ad(0)
-s=12e4-a
-r=s>0?s:12e4
+s=27e5-a
+r=s>0?s:27e5
 A.a1("[Auth] Next token refresh in "+B.d.aG(r/1000)+"s")
 this.e=A.cV(A.dO(0,0,r,0,0),new A.acq(this))},
 PK(){var s,r=this
